@@ -4,6 +4,7 @@ from ping3 import ping
 import requests
 import os
 from dotenv import load_dotenv
+import datetime
 
 def ping_item(domain):
     result = ping(dest_addr=domain['name'], timeout=4, ttl=64)
@@ -38,5 +39,7 @@ if __name__ == "__main__":
 
         finish = time.perf_counter()
         print(f'Выполнение заняло {finish-start: .2f} секунд.')
+        now = datetime.datetime.now()
+        print(now.strftime('%Y-%m-%d %H:%M:%S”'))
         
         time.sleep(10)
