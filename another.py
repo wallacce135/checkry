@@ -23,11 +23,9 @@ if __name__ == "__main__":
     TOKEN = os.getenv('TELEGRAM_TOKEN')
     CHATID = os.getenv('TELEGRAM_CHATID')
     
-    information = requests.get(f"https://integration-api-wp.com/domain/integration-pull?auth_key={AUTH_KEY}").json()
-
-    # print(information)
 
     while True:
+        information = requests.get(f"https://integration-api-wp.com/domain/integration-pull?auth_key={AUTH_KEY}").json()
         start = time.perf_counter()
 
         with multiprocessing.Pool() as pool:
@@ -37,7 +35,6 @@ if __name__ == "__main__":
                 for text in results:
                     requests.get(f"https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={CHATID}&text={text}")
                     time.sleep(3)
-        print(results)
 
         finish = time.perf_counter()
         print(f'Выполнение заняло {finish-start: .2f} секунд.')
