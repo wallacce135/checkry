@@ -21,13 +21,13 @@ def pingDomain(domain, token):
         print(f"Data was not retrieved {error}\nURL: {domain['name']}")
         if(domain['buyer']['telegramLogin'] is None):
             if(domain['buyer']['name'] is None):
-                text = f"💀 {domain['name']} 💀 data was not retrieved\nError:{error}\n{domain['owner']['name']}"
+                text = f"💀 {domain['name']} 💀 data was not retrieved\nError: {error}\n{domain['owner']['name']}"
                 requests.get(f"https://api.telegram.org/bot{token}/sendMessage?chat_id=-1001832929433&text={text}")
             else:
-                text = f"💀 {domain['name']} 💀 data was not retrieved\nError:{error}\n{domain['buyer']['name']}"
+                text = f"💀 {domain['name']} 💀 data was not retrieved\nError: {error}\n{domain['buyer']['name']}"
                 requests.get(f"https://api.telegram.org/bot{token}/sendMessage?chat_id=-1001832929433&text={text}")
         else:
-            text = f"💀 {domain['name']} 💀 data was not retrieved\nError:{error}\n{domain['buyer']['telegramLogin']}"
+            text = f"💀 {domain['name']} 💀 data was not retrieved\nError: {error}\n{domain['buyer']['telegramLogin']}"
             requests.get(f"https://api.telegram.org/bot{token}/sendMessage?chat_id=-1001832929433&text={text}")
         
 
