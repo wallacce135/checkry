@@ -12,7 +12,7 @@ from itertools import repeat
 
 def pingDomain(domain, token):
     try:
-        result = urllib.request.urlopen(url="https://" + domain['name'], timeout=60)
+        result = urllib.request.urlopen(url="http://" + domain['name'], timeout=60)
         # print(result)
         # print(domain['name'])
 
@@ -27,8 +27,13 @@ def pingDomain(domain, token):
                 text = f"💀 {domain['name']} 💀 data was not retrieved\nError: {error}\n{domain['buyer']['name']}"
                 requests.get(f"https://api.telegram.org/bot{token}/sendMessage?chat_id=-1001832929433&text={text}")
         else:
-            text = f"💀 {domain['name']} 💀 data was not retrieved\nError: {error}\n{domain['buyer']['telegramLogin']}"
-            requests.get(f"https://api.telegram.org/bot{token}/sendMessage?chat_id=-1001832929433&text={text}")
+            if(domain['buyer']['telegramLogin'].find('@') == -1):
+                telegram_login = "@" + domain['buyer']['telegramLogin']
+                text = f"💀 {domain['name']} 💀 data was not retrieved\nError: {error}\n{telegram_login}"
+                requests.get(f"https://api.telegram.org/bot{token}/sendMessage?chat_id=-1001832929433&text={text}")
+            else: 
+                text = f"💀 {domain['name']} 💀 data was not retrieved\nError: {error}\n{domain['buyer']['telegramLogin']}"
+                requests.get(f"https://api.telegram.org/bot{token}/sendMessage?chat_id=-1001832929433&text={text}")
         
 
     except socket.timeout: 
@@ -42,8 +47,13 @@ def pingDomain(domain, token):
                 text = f"💀 {domain['name']} 💀 data was not retrieved\nError:TimeoutError\n{domain['buyer']['name']}"
                 requests.get(f"https://api.telegram.org/bot{token}/sendMessage?chat_id=-1001832929433&text={text}")
         else:
-            text = f"💀 {domain['name']} 💀 data was not retrieved\nError:TimeoutError\n{domain['buyer']['telegramLogin']}"
-            requests.get(f"https://api.telegram.org/bot{token}/sendMessage?chat_id=-1001832929433&text={text}")
+            if(domain['buyer']['telegramLogin'].find("@") == -1):
+                telegram_login = "@" + domain['buyer']['telegramLogin']
+                text = f"💀 {domain['name']} 💀 data was not retrieved\nError:TimeoutError\n{telegram_login}"
+                requests.get(f"https://api.telegram.org/bot{token}/sendMessage?chat_id=-1001832929433&text={text}")
+            else:
+                text = f"💀 {domain['name']} 💀 data was not retrieved\nError: {error}\n{domain['buyer']['telegramLogin']}"
+                requests.get(f"https://api.telegram.org/bot{token}/sendMessage?chat_id=-1001832929433&text={text}")
         requests.get(f"https://api.telegram.org/bot{token}/sendMessage?chat_id=-1001832929433&text={text}")
     return
 
